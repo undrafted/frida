@@ -1,51 +1,88 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define BMP_HEADER_SIZE 54
+#define BMP_COLOR_TABLE_SIZE 1024
+#define CUSTOM_IMG_SIZE 1024 * 1024
+
+void bmpReader(const char *imgName,
+               int *_height,
+               int *_width,
+               int *_bitDepth,
+               unsigned char *_header,
+               unsigned char *_colorTable,
+               unsigned char *_buffer);
+
+void bmpWriter(const char *imgName,
+               unsigned char *header,
+               unsigned char *colorTable,
+               unsigned char *buffer,
+               int bitDepth);
+
 int main()
 {
-  FILE *streamIn = fopen("images/image.bmp", "rb");
-  FILE *outputFile = fopen("images/image_copy.bmp", "wb");
+
+  int imgWidth, imgHeight, imgBitDepth;
+  unsigned char imgHeader[BMP_HEADER_SIZE];
+  unsigned char imgColorTable[BMP_COLOR_TABLE_SIZE];
+  unsigned char imgBuffer[CUSTOM_IMG_SIZE];
+
+  const char imgName[] = "images/image2.bmp";
+  const char copyImgName[] = "images/image2_copy.bmp";
+
+  bmpReader(imgName, &imgWidth, &imgHeight, &imgBitDepth, imgHeader, imgColorTable, imgBuffer);
+  bmpWriter(copyImgName, imgHeader, imgColorTable, imgBuffer, imgBitDepth);
+
+  printf("Copy success!\n");
+  return 0;
+}
+
+void bmpReader(const char *imgName,
+               int *_height,
+               int *_width,
+               int *_bitDepth,
+               unsigned char *_header,
+               unsigned char *_colorTable,
+               unsigned char *_buffer)
+{
+  int i;
+  FILE *streamIn;
+  streamIn = fopen(imgName, "rb");
 
   if (streamIn == (FILE *)0)
   {
-    printf("Unable to open file\n");
+    printf("unable to open image \n");
   }
 
-  unsigned char header[54];
-  unsigned char colorTable[1024];
-
-  for (int i = 0; i < 54; i++)
+  for (i = 0; i < 54; i++)
   {
-    header[i] = getc(streamIn);
+    _header[i] = getc(streamIn);
   }
-  // header offset 18 is image width
-  int width = *(int *)&header[18];
-  // header offset 24 is image height
-  int height = *(int *)&header[22];
-  // header offset 28 is image bit depth
-  int bitDepth = *(int *)&header[28];
+  *_width = *(int *)&_header[18];    // header offset 18 is image width
+  *_height = *(int *)&_header[22];   // header offset 24 is image height
+  *_bitDepth = *(int *)&_header[28]; // header offset 28 is image bit depth
 
-  if (bitDepth <= 8)
+  if (*_bitDepth <= 8)
   {
-    fread(colorTable, sizeof(unsigned char), 1024, streamIn);
+    fread(_colorTable, sizeof(unsigned char), BMP_COLOR_TABLE_SIZE, streamIn);
   }
-
-  unsigned char buffer[height * width];
-  fread(buffer, sizeof(unsigned char), (height * width), streamIn);
-
-  fwrite(header, sizeof(unsigned char), 54, outputFile);
-  if (bitDepth <= 8)
-  {
-    fwrite(colorTable, sizeof(unsigned char), 1024, outputFile);
-  }
-  fwrite(buffer, sizeof(unsigned char), (height * width), outputFile);
-
-  fclose(outputFile);
+  fread(_buffer, sizeof(unsigned char), CUSTOM_IMG_SIZE, streamIn);
   fclose(streamIn);
+}
 
-  printf("Copy success !\n");
-  printf("Width: %d\n", width);
-  printf("Height: %d\n", height);
+void bmpWriter(const char *imgName,
+               unsigned char *header,
+               unsigned char *colorTable,
+               unsigned char *buffer,
+               int bitDepth)
+{
+  FILE *outputFile = fopen(imgName, "wb");
+  fwrite(header, sizeof(unsigned char), BMP_HEADER_SIZE, outputFile);
+  if (bitDepth <= 8)
+  {
+    fwrite(colorTable, sizeof(unsigned char), BMP_COLOR_TABLE_SIZE, outputFile);
+  }
 
-  return 0;
+  fwrite(buffer, sizeof(unsigned char), CUSTOM_IMG_SIZE, outputFile);
+  fclose(outputFile);
 }
