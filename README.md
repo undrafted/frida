@@ -1,2 +1,3 @@
 # frida
-Image processing library in C/C++
+
+Image processing library written in C++
