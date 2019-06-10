@@ -1,11 +1,11 @@
-#include "ImageProcessing.h"
+#include "../include/BitmapImageProcessing.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <iostream>
 
 using namespace std;
 
-ImageProcessing::ImageProcessing(
+BitmapImageProcessing::BitmapImageProcessing(
     const char *_inImgName,
     const char *_outImgName,
     int *_height,
@@ -27,20 +27,23 @@ ImageProcessing::ImageProcessing(
   outBuffer = _outBuffer;
 }
 
-void ImageProcessing::readImage()
+void BitmapImageProcessing::readImage()
 {
   int i;
   FILE *streamIn;
   streamIn = fopen(inImgName, "rb");
+
   if (streamIn == (FILE *)0)
   {
     cout << "Unable to open file. Maybe file does not exist" << endl;
     exit(0);
   }
+
   for (i = 0; i < BMP_HEADER_SIZE; i++)
   {
     header[i] = getc(streamIn);
   }
+
   *width = *(int *)&header[BMP_WIDTH_HEADER_OFFSET];       // read the width from bitmap header
   *height = *(int *)&header[BMP_HEIGHT_HEADER_OFFSET];     // read the height from bitmap header
   *bitDepth = *(int *)&header[BMP_BITDEPTH_HEADER_OFFSET]; // read the bit Depth from bitmap header
@@ -54,7 +57,7 @@ void ImageProcessing::readImage()
   fclose(streamIn);
 }
 
-void ImageProcessing::writeImage()
+void BitmapImageProcessing::writeImage()
 {
   FILE *outputFile = fopen(outImgName, "wb");
   fwrite(header, sizeof(unsigned char), BMP_HEADER_SIZE, outputFile);
@@ -68,7 +71,7 @@ void ImageProcessing::writeImage()
   fclose(outputFile);
 }
 
-void ImageProcessing::copyImgData(unsigned char *_srcBuffer, unsigned char *_destBuffer, int bufferSize)
+void BitmapImageProcessing::copyImgData(unsigned char *_srcBuffer, unsigned char *_destBuffer, int bufferSize)
 {
   for (int i = 0; i < bufferSize; i++)
   {
@@ -76,6 +79,7 @@ void ImageProcessing::copyImgData(unsigned char *_srcBuffer, unsigned char *_des
   }
 }
 
-ImageProcessing::~ImageProcessing()
+BitmapImageProcessing::~BitmapImageProcessing()
 {
+  //dtor
 }

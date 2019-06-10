@@ -1,5 +1,5 @@
 #include <iostream>
-#include "include/ImageProcessing.h"
+#include "include/BitmapImageProcessing.h"
 
 using namespace std;
 
@@ -16,15 +16,15 @@ int main()
   const char imgName[] = "images/image.bmp";
   const char newImageName[] = "images/output/image_copy.bmp";
 
-  ImageProcessing *image = new ImageProcessing(imgName,
-                                               newImageName,
-                                               &imgHeight,
-                                               &imgWidth,
-                                               &imgBitDepth,
-                                               &imgHeader[0],
-                                               &imgColorTable[0],
-                                               &imgInBuffer[0],
-                                               &imgOutBuffer[0]);
+  BitmapImageProcessing *image = new BitmapImageProcessing(imgName,
+                                                           newImageName,
+                                                           &imgHeight,
+                                                           &imgWidth,
+                                                           &imgBitDepth,
+                                                           &imgHeader[0],
+                                                           &imgColorTable[0],
+                                                           &imgInBuffer[0],
+                                                           &imgOutBuffer[0]);
 
   image->readImage();
   image->copyImgData(imgInBuffer, imgOutBuffer, _512by512_IMG_SIZE);
