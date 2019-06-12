@@ -3,8 +3,7 @@
 
 using namespace std;
 
-int main()
-{
+int main() {
   int imgWidth;
   int imgHeight;
   int imgBitDepth;
@@ -40,15 +39,11 @@ int main()
   // image->writeImage();
   // cout << "Image succesfully copied and binarized!" << endl;
 
-  // image->readImage();
-  // image->brightnessUp(imgInBuffer, imgOutBuffer, _512by512_IMG_SIZE, 50);
-  // image->writeImage();
-  // cout << "Image succesfully copied and brightened up!" << endl;
-
+  int adjustment = 50;
   image->readImage();
-  image->brightnessDown(imgInBuffer, imgOutBuffer, _512by512_IMG_SIZE, 500);
+  image->adjustBrightness(imgInBuffer, imgOutBuffer, _512by512_IMG_SIZE, adjustment);
   image->writeImage();
-  cout << "Image succesfully copied and darkened!" << endl;
+  cout << "Image succesfully copied and " <<  ((adjustment > 0) ? "brightened" : "darkened") << "!" << endl;
 
   return 0;
 }

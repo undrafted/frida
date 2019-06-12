@@ -12,8 +12,7 @@ static const int MIN_COLOR = 0;
 static const int WHITE = MAX_COLOR;
 static const int BLACK = MIN_COLOR;
 
-class BitmapImageProcessing
-{
+class BitmapImageProcessing {
 public:
   BitmapImageProcessing(
       const char *_inImgName,
@@ -29,8 +28,7 @@ public:
   void writeImage();
   void copyImgData(unsigned char *_srcBuffer, unsigned char *_destBuffer, int bufferSize);
   void binarizeImage(unsigned char *_inImgData, unsigned char *_outImgData, int imgSize, int threshold);
-  void brightnessUp(unsigned char *_inputImgData, unsigned char *_outputImgData, int imgSize, int brightness);
-  void brightnessDown(unsigned char *_inImgData, unsigned char *_outImgData, int imgSize, int darkness);
+  void adjustBrightness(unsigned char *_inputImgData, unsigned char *_outputImgData, int imgSize, int adjustment);
   virtual ~BitmapImageProcessing();
 
 protected:
