@@ -15,7 +15,8 @@ int main()
 
   const char imgName[] = "images/image.bmp";
   // const char newImageName[] = "images/output/image_copy.bmp";
-  const char newImageName[] = "images/output/image_b&w.bmp";
+  // const char newImageName[] = "images/output/image_b&w.bmp";
+  const char newImageName[] = "images/output/image_brightenup.bmp";
 
   BitmapImageProcessing *image = new BitmapImageProcessing(imgName,
                                                            newImageName,
@@ -34,10 +35,15 @@ int main()
   // cout << "Image height: " << imgHeight << endl;
   // cout << "Image width: " << imgWidth << endl;
 
+  // image->readImage();
+  // image->binarizeImage(imgInBuffer, imgOutBuffer, _512by512_IMG_SIZE, 64);
+  // image->writeImage();
+  // cout << "Image succesfully copied and binarized!" << endl;
+
   image->readImage();
-  image->binarizeImage(imgInBuffer, imgOutBuffer, _512by512_IMG_SIZE, 64);
+  image->brightnessUp(imgInBuffer, imgOutBuffer, _512by512_IMG_SIZE, 50);
   image->writeImage();
-  cout << "Image succesfully copied and binarized!" << endl;
+  cout << "Image succesfully copied and brightened up!" << endl;
 
   return 0;
 }

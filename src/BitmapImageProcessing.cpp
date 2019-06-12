@@ -87,6 +87,17 @@ void BitmapImageProcessing::binarizeImage(unsigned char *_inImgData, unsigned ch
   }
 }
 
+// the higher the pixel value is the brighter it is
+// this implementation does truncation
+void BitmapImageProcessing::brightnessUp(unsigned char *_inImgData, unsigned char *_outImgData, int imgSize, int brightness)
+{
+  for (int i = 0; i < imgSize; i++)
+  {
+    int temp = _inImgData[i] + brightness;
+    _outImgData[i] = (temp > MAX_COLOR) ? MAX_COLOR : temp;
+  }
+}
+
 BitmapImageProcessing::~BitmapImageProcessing()
 {
   //dtor
