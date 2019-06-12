@@ -40,10 +40,15 @@ int main()
   // image->writeImage();
   // cout << "Image succesfully copied and binarized!" << endl;
 
+  // image->readImage();
+  // image->brightnessUp(imgInBuffer, imgOutBuffer, _512by512_IMG_SIZE, 50);
+  // image->writeImage();
+  // cout << "Image succesfully copied and brightened up!" << endl;
+
   image->readImage();
-  image->brightnessUp(imgInBuffer, imgOutBuffer, _512by512_IMG_SIZE, 50);
+  image->brightnessDown(imgInBuffer, imgOutBuffer, _512by512_IMG_SIZE, 500);
   image->writeImage();
-  cout << "Image succesfully copied and brightened up!" << endl;
+  cout << "Image succesfully copied and darkened!" << endl;
 
   return 0;
 }

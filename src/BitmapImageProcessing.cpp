@@ -98,6 +98,15 @@ void BitmapImageProcessing::brightnessUp(unsigned char *_inImgData, unsigned cha
   }
 }
 
+void BitmapImageProcessing::brightnessDown(unsigned char *_inImgData, unsigned char *_outImgData, int imgSize, int darkness)
+{
+  for (int i = 0; i < imgSize; i++)
+  {
+    int temp = _inImgData[i] - darkness;
+    _outImgData[i] = (temp < MIN_COLOR) ? MIN_COLOR : temp;
+  }
+}
+
 BitmapImageProcessing::~BitmapImageProcessing()
 {
   //dtor
