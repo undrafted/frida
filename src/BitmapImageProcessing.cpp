@@ -79,6 +79,14 @@ void BitmapImageProcessing::copyImgData(unsigned char *_srcBuffer, unsigned char
   }
 }
 
+void BitmapImageProcessing::binarizeImage(unsigned char *_inImgData, unsigned char *_outImgData, int imgSize, int threshold)
+{
+  for (int i = 0; i < imgSize; i++)
+  {
+    _outImgData[i] = (_inImgData[i] > threshold) ? WHITE : BLACK;
+  }
+}
+
 BitmapImageProcessing::~BitmapImageProcessing()
 {
   //dtor

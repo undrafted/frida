@@ -14,7 +14,8 @@ int main()
   unsigned char imgOutBuffer[_512by512_IMG_SIZE];
 
   const char imgName[] = "images/image.bmp";
-  const char newImageName[] = "images/output/image_copy.bmp";
+  // const char newImageName[] = "images/output/image_copy.bmp";
+  const char newImageName[] = "images/output/image_b&w.bmp";
 
   BitmapImageProcessing *image = new BitmapImageProcessing(imgName,
                                                            newImageName,
@@ -26,13 +27,17 @@ int main()
                                                            &imgInBuffer[0],
                                                            &imgOutBuffer[0]);
 
-  image->readImage();
-  image->copyImgData(imgInBuffer, imgOutBuffer, _512by512_IMG_SIZE);
-  image->writeImage();
+  // image->readImage();
+  // image->copyImgData(imgInBuffer, imgOutBuffer, _512by512_IMG_SIZE);
+  // image->writeImage();
+  // cout << "Image succesfully copied!" << endl;
+  // cout << "Image height: " << imgHeight << endl;
+  // cout << "Image width: " << imgWidth << endl;
 
-  cout << "Image succesfully copied!" << endl;
-  cout << "Image height: " << imgHeight << endl;
-  cout << "Image width: " << imgWidth << endl;
+  image->readImage();
+  image->binarizeImage(imgInBuffer, imgOutBuffer, _512by512_IMG_SIZE, 64);
+  image->writeImage();
+  cout << "Image succesfully copied and binarized!" << endl;
 
   return 0;
 }

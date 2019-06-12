@@ -7,6 +7,10 @@ static const int BMP_HEADER_SIZE = 54;
 static const int BMP_WIDTH_HEADER_OFFSET = 18;
 static const int BMP_HEIGHT_HEADER_OFFSET = 22;
 static const int BMP_BITDEPTH_HEADER_OFFSET = 28;
+static const int MAX_COLOR = 255;
+static const int MIN_COLOR = 0;
+static const int WHITE = MAX_COLOR;
+static const int BLACK = MIN_COLOR;
 
 class BitmapImageProcessing
 {
@@ -24,7 +28,7 @@ public:
   void readImage();
   void writeImage();
   void copyImgData(unsigned char *_srcBuffer, unsigned char *_destBuffer, int bufferSize);
-
+  void binarizeImage(unsigned char *_inImgData, unsigned char *_outImgData, int imgSize, int threshold);
   virtual ~BitmapImageProcessing();
 
 protected:
