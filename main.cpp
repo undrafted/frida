@@ -1,8 +1,6 @@
 #include <iostream>
 #include "include/BitmapImageProcessing.h"
 
-using namespace std;
-
 int main() {
   int imgWidth;
   int imgHeight;
@@ -30,20 +28,20 @@ int main() {
   // image->readImage();
   // image->copyImgData(imgInBuffer, imgOutBuffer, _512by512_IMG_SIZE);
   // image->writeImage();
-  // cout << "Image succesfully copied!" << endl;
-  // cout << "Image height: " << imgHeight << endl;
-  // cout << "Image width: " << imgWidth << endl;
+  // std::cout << "Image succesfully copied!" << std::endl;
+  // std::cout << "Image height: " << imgHeight << std::endl;
+  // std::cout << "Image width: " << imgWidth << std::endl;
 
   // image->readImage();
   // image->binarizeImage(imgInBuffer, imgOutBuffer, _512by512_IMG_SIZE, 64);
   // image->writeImage();
-  // cout << "Image succesfully copied and binarized!" << endl;
+  // std::cout << "Image succesfully copied and binarized!" << std::endl;
 
   int adjustment = 50;
   image->readImage();
   image->adjustBrightness(imgInBuffer, imgOutBuffer, _512by512_IMG_SIZE, adjustment);
   image->writeImage();
-  cout << "Image succesfully copied and " <<  ((adjustment > 0) ? "brightened" : "darkened") << "!" << endl;
+  std::cout << "Image succesfully copied and " <<  ((adjustment > 0) ? "brightened" : "darkened") << "!" << std::endl;
 
   return 0;
 }

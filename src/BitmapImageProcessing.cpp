@@ -3,8 +3,6 @@
 #include <stdlib.h>
 #include <iostream>
 
-using namespace std;
-
 BitmapImageProcessing::BitmapImageProcessing(
     const char *_inImgName,
     const char *_outImgName,
@@ -32,7 +30,7 @@ void BitmapImageProcessing::readImage() {
   streamIn = fopen(inImgName, "rb");
 
   if (streamIn == (FILE *)0) {
-    cout << "Unable to open file. Maybe file does not exist" << endl;
+    std::cout << "Unable to open file. Maybe file does not exist" << std::endl;
     exit(0);
   }
 
