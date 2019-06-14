@@ -1,7 +1,9 @@
 #include <iostream>
 #include "include/BitmapImageProcessing.h"
 
-int main() {
+int main()
+{
+
   int imgWidth;
   int imgHeight;
   int imgBitDepth;
@@ -9,6 +11,7 @@ int main() {
   unsigned char imgColorTable[BMP_COLOR_TABLE_SIZE];
   unsigned char imgInBuffer[_512by512_IMG_SIZE];
   unsigned char imgOutBuffer[_512by512_IMG_SIZE];
+  float imgHist[GRAYLEVELS_NUM];
 
   const char imgName[] = "images/image.bmp";
   // const char newImageName[] = "images/output/image_copy.bmp";
@@ -37,11 +40,16 @@ int main() {
   // image->writeImage();
   // std::cout << "Image succesfully copied and binarized!" << std::endl;
 
-  int adjustment = 50;
+  // int adjustment = 50;
+  // image->readImage();
+  // image->adjustBrightness(imgInBuffer, imgOutBuffer, _512by512_IMG_SIZE, adjustment);
+  // image->writeImage();
+  // std::cout << "Image succesfully copied and " <<  ((adjustment > 0) ? "brightened" : "darkened") << "!" << std::endl;
+
   image->readImage();
-  image->adjustBrightness(imgInBuffer, imgOutBuffer, _512by512_IMG_SIZE, adjustment);
-  image->writeImage();
-  std::cout << "Image succesfully copied and " <<  ((adjustment > 0) ? "brightened" : "darkened") << "!" << std::endl;
+  image->computeHistogram(imgInBuffer, imgHeight, imgWidth, imgHist);
+
+  std::cout << "Image computed histogram!" << std::endl;
 
   return 0;
 }

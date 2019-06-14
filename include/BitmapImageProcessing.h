@@ -11,8 +11,10 @@ static const int MAX_COLOR = 255;
 static const int MIN_COLOR = 0;
 static const int WHITE = MAX_COLOR;
 static const int BLACK = MIN_COLOR;
+static const int GRAYLEVELS_NUM = 255;
 
-class BitmapImageProcessing {
+class BitmapImageProcessing
+{
 public:
   BitmapImageProcessing(
       const char *_inImgName,
@@ -29,6 +31,7 @@ public:
   void copyImgData(unsigned char *_srcBuffer, unsigned char *_destBuffer, int bufferSize);
   void binarizeImage(unsigned char *_inImgData, unsigned char *_outImgData, int imgSize, int threshold);
   void adjustBrightness(unsigned char *_inputImgData, unsigned char *_outputImgData, int imgSize, int adjustment);
+  void computeHistogram(unsigned char *_imgData, int imgRows, int imgCols, float hist[]);
   virtual ~BitmapImageProcessing();
 
 protected:

@@ -12,7 +12,8 @@ BitmapImageProcessing::BitmapImageProcessing(
     unsigned char *_header,
     unsigned char *_colorTable,
     unsigned char *_inBuffer,
-    unsigned char *_outBuffer) {
+    unsigned char *_outBuffer)
+{
   inImgName = _inImgName;
   outImgName = _outImgName;
   height = _height;
@@ -24,17 +25,20 @@ BitmapImageProcessing::BitmapImageProcessing(
   outBuffer = _outBuffer;
 }
 
-void BitmapImageProcessing::readImage() {
+void BitmapImageProcessing::readImage()
+{
   int i;
   FILE *streamIn;
   streamIn = fopen(inImgName, "rb");
 
-  if (streamIn == (FILE *)0) {
+  if (streamIn == (FILE *)0)
+  {
     std::cout << "Unable to open file. Maybe file does not exist" << std::endl;
     exit(0);
   }
 
-  for (i = 0; i < BMP_HEADER_SIZE; i++) {
+  for (i = 0; i < BMP_HEADER_SIZE; i++)
+  {
     header[i] = getc(streamIn);
   }
 
@@ -42,7 +46,8 @@ void BitmapImageProcessing::readImage() {
   *height = *(int *)&header[BMP_HEIGHT_HEADER_OFFSET];     // read the height from bitmap header
   *bitDepth = *(int *)&header[BMP_BITDEPTH_HEADER_OFFSET]; // read the bit Depth from bitmap header
 
-  if (*bitDepth <= 8) {
+  if (*bitDepth <= 8)
+  {
     fread(colorTable, sizeof(unsigned char), BMP_COLOR_TABLE_SIZE, streamIn);
   }
 
@@ -50,11 +55,13 @@ void BitmapImageProcessing::readImage() {
   fclose(streamIn);
 }
 
-void BitmapImageProcessing::writeImage() {
+void BitmapImageProcessing::writeImage()
+{
   FILE *outputFile = fopen(outImgName, "wb");
   fwrite(header, sizeof(unsigned char), BMP_HEADER_SIZE, outputFile);
 
-  if (*bitDepth <= 8) {
+  if (*bitDepth <= 8)
+  {
     fwrite(colorTable, sizeof(unsigned char), BMP_COLOR_TABLE_SIZE, outputFile);
   }
 
@@ -62,14 +69,18 @@ void BitmapImageProcessing::writeImage() {
   fclose(outputFile);
 }
 
-void BitmapImageProcessing::copyImgData(unsigned char *_srcBuffer, unsigned char *_destBuffer, int bufferSize) {
-  for (int i = 0; i < bufferSize; i++) {
+void BitmapImageProcessing::copyImgData(unsigned char *_srcBuffer, unsigned char *_destBuffer, int bufferSize)
+{
+  for (int i = 0; i < bufferSize; i++)
+  {
     _destBuffer[i] = _srcBuffer[i];
   }
 }
 
-void BitmapImageProcessing::binarizeImage(unsigned char *_inImgData, unsigned char *_outImgData, int imgSize, int threshold) {
-  for (int i = 0; i < imgSize; i++) {
+void BitmapImageProcessing::binarizeImage(unsigned char *_inImgData, unsigned char *_outImgData, int imgSize, int threshold)
+{
+  for (int i = 0; i < imgSize; i++)
+  {
     _outImgData[i] = (_inImgData[i] > threshold) ? WHITE : BLACK;
   }
 }
@@ -77,20 +88,62 @@ void BitmapImageProcessing::binarizeImage(unsigned char *_inImgData, unsigned ch
 // the higher the pixel value is the brighter it is
 // the lower the darker ;)
 // this implementation does truncation
-void BitmapImageProcessing::adjustBrightness(unsigned char *_inImgData, unsigned char *_outImgData, int imgSize, int adjustment) {
-  for (int i = 0; i < imgSize; i++) {
+void BitmapImageProcessing::adjustBrightness(unsigned char *_inImgData, unsigned char *_outImgData, int imgSize, int adjustment)
+{
+  for (int i = 0; i < imgSize; i++)
+  {
     int temp = _inImgData[i] + adjustment;
 
-    if (temp > MAX_COLOR) {
+    if (temp > MAX_COLOR)
+    {
       _outImgData[i] = MAX_COLOR;
-    } else if (temp < MIN_COLOR) {
+    }
+    else if (temp < MIN_COLOR)
+    {
       _outImgData[i] = MIN_COLOR;
-    } else {
+    }
+    else
+    {
       _outImgData[i] = temp;
     }
   }
 }
 
-BitmapImageProcessing::~BitmapImageProcessing() {
+void BitmapImageProcessing::computeHistogram(unsigned char *_imgData, int imgRows, int imgCols, float hist[])
+{
+  FILE *fptr;
+  fptr = fopen("images/output/hist.txt", "w");
+  int x, y, i, j;
+  long int ihist[256], sum;
+  for (i = 0; i <= 255; i++)
+  {
+    ihist[i] = 0;
+  }
+  sum = 0;
+  for (y = 0; y < imgRows; y++)
+  {
+    for (x = 0; x < imgCols; x++)
+    {
+      j = *(_imgData + x + y * imgCols);
+      ihist[j] = ihist[j] + 1;
+      sum = sum + 1;
+    }
+  }
+  for (i = 0; i < 255; i++)
+  {
+    hist[i] = (float)ihist[i] / (float)sum;
+  }
+
+  // write content to txt file
+  for (i = 0; i <= 255; i++)
+  {
+    fprintf(fptr, "\n%f", hist[i]);
+  }
+
+  fclose(fptr);
+}
+
+BitmapImageProcessing::~BitmapImageProcessing()
+{
   //dtor
 }
