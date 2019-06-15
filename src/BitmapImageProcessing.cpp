@@ -143,6 +143,38 @@ void BitmapImageProcessing::computeHistogram(unsigned char *_imgData, int imgRow
   fclose(fptr);
 }
 
+void BitmapImageProcessing::equalizeHistogram(unsigned char *_inputImgData, unsigned char *_outputImgData, int imgRows, int imgCols)
+{
+  int x, y, i, j;
+  int histEqualized[256];
+  float hist[256];
+  float sum;
+  const char initHistogramFile[] = "images/output/init_histogram.txt";
+  const char finalHistogramFile[] = "images/output/equalized_histogram.txt";
+
+  computeHistogram(&_inputImgData[0], imgRows, imgCols, hist, initHistogramFile);
+
+  for (i = 0; i <= 255; i++)
+  {
+    sum = 0.0;
+    for (j = 0; j <= i; j++)
+    {
+      sum = sum + hist[j];
+    }
+    histEqualized[i] = (int)(255 * sum + 0.5);
+  }
+
+  for (y = 0; y < imgRows; y++)
+  {
+    for (x = 0; x < imgCols; x++)
+    {
+      *(_outputImgData + x + y * imgCols) = histEqualized[*(_inputImgData + x + y * imgCols)];
+    }
+  }
+
+  computeHistogram(&_outputImgData[0], imgRows, imgCols, &hist[0], finalHistogramFile);
+}
+
 BitmapImageProcessing::~BitmapImageProcessing()
 {
   //dtor

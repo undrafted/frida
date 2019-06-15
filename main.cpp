@@ -16,7 +16,8 @@ int main()
   const char imgName[] = "images/image.bmp";
   // const char newImageName[] = "images/output/image_copy.bmp";
   // const char newImageName[] = "images/output/image_b&w.bmp";
-  const char newImageName[] = "images/output/image_brightenup.bmp";
+  // const char newImageName[] = "images/output/image_brightenup.bmp";
+  const char newImageName[] = "images/output/image_equalized.bmp";
 
   BitmapImageProcessing *image = new BitmapImageProcessing(imgName,
                                                            newImageName,
@@ -46,10 +47,14 @@ int main()
   // image->writeImage();
   // std::cout << "Image succesfully copied and " <<  ((adjustment > 0) ? "brightened" : "darkened") << "!" << std::endl;
 
-  image->readImage();
-  image->computeHistogram(imgInBuffer, imgHeight, imgWidth, imgHist, "images/output/hist.txt");
+  // image->readImage();
+  // image->computeHistogram(imgInBuffer, imgHeight, imgWidth, imgHist, "images/output/hist.txt");
+  // std::cout << "Image computed histogram!" << std::endl;
 
-  std::cout << "Image computed histogram!" << std::endl;
+  image->readImage();
+  image->equalizeHistogram(imgInBuffer, imgOutBuffer, imgHeight, imgWidth);
+  image->writeImage();
+  std::cout << "Image histogram equalized and written!" << std::endl;
 
   return 0;
 }
