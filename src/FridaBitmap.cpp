@@ -1,9 +1,9 @@
-#include "../include/BitmapImageProcessing.h"
+#include "../include/FridaBitmap.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <iostream>
 
-BitmapImageProcessing::BitmapImageProcessing(
+FridaBitmap::FridaBitmap(
     const char *_inImgName,
     const char *_outImgName,
     int *_height,
@@ -25,7 +25,7 @@ BitmapImageProcessing::BitmapImageProcessing(
   outBuffer = _outBuffer;
 }
 
-void BitmapImageProcessing::readImage()
+void FridaBitmap::readImage()
 {
   int i;
   FILE *streamIn;
@@ -55,7 +55,7 @@ void BitmapImageProcessing::readImage()
   fclose(streamIn);
 }
 
-void BitmapImageProcessing::writeImage()
+void FridaBitmap::writeImage()
 {
   FILE *outputFile = fopen(outImgName, "wb");
   fwrite(header, sizeof(unsigned char), BMP_HEADER_SIZE, outputFile);
@@ -69,7 +69,7 @@ void BitmapImageProcessing::writeImage()
   fclose(outputFile);
 }
 
-void BitmapImageProcessing::copyImgData(unsigned char *_srcBuffer, unsigned char *_destBuffer, int bufferSize)
+void FridaBitmap::copyImgData(unsigned char *_srcBuffer, unsigned char *_destBuffer, int bufferSize)
 {
   for (int i = 0; i < bufferSize; i++)
   {
@@ -77,7 +77,7 @@ void BitmapImageProcessing::copyImgData(unsigned char *_srcBuffer, unsigned char
   }
 }
 
-void BitmapImageProcessing::binarizeImage(unsigned char *_inImgData, unsigned char *_outImgData, int imgSize, int threshold)
+void FridaBitmap::binarizeImage(unsigned char *_inImgData, unsigned char *_outImgData, int imgSize, int threshold)
 {
   for (int i = 0; i < imgSize; i++)
   {
@@ -88,7 +88,7 @@ void BitmapImageProcessing::binarizeImage(unsigned char *_inImgData, unsigned ch
 // the higher the pixel value is the brighter it is
 // the lower the darker ;)
 // this implementation does truncation
-void BitmapImageProcessing::adjustBrightness(unsigned char *_inImgData, unsigned char *_outImgData, int imgSize, int adjustment)
+void FridaBitmap::adjustBrightness(unsigned char *_inImgData, unsigned char *_outImgData, int imgSize, int adjustment)
 {
   for (int i = 0; i < imgSize; i++)
   {
@@ -109,7 +109,7 @@ void BitmapImageProcessing::adjustBrightness(unsigned char *_inImgData, unsigned
   }
 }
 
-void BitmapImageProcessing::computeHistogram(unsigned char *_imgData, int imgRows, int imgCols, float hist[], const char *histFileName)
+void FridaBitmap::computeHistogram(unsigned char *_imgData, int imgRows, int imgCols, float hist[], const char *histFileName)
 {
   FILE *fptr;
   fptr = fopen(histFileName, "w");
@@ -143,7 +143,7 @@ void BitmapImageProcessing::computeHistogram(unsigned char *_imgData, int imgRow
   fclose(fptr);
 }
 
-void BitmapImageProcessing::equalizeHistogram(unsigned char *_inputImgData, unsigned char *_outputImgData, int imgRows, int imgCols)
+void FridaBitmap::equalizeHistogram(unsigned char *_inputImgData, unsigned char *_outputImgData, int imgRows, int imgCols)
 {
   int x, y, i, j;
   int histEqualized[256];
@@ -175,7 +175,7 @@ void BitmapImageProcessing::equalizeHistogram(unsigned char *_inputImgData, unsi
   computeHistogram(&_outputImgData[0], imgRows, imgCols, &hist[0], finalHistogramFile);
 }
 
-BitmapImageProcessing::~BitmapImageProcessing()
+FridaBitmap::~FridaBitmap()
 {
   //dtor
 }

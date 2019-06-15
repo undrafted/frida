@@ -1,5 +1,5 @@
-#ifndef BITMAPIMAGEPROCESSING_H
-#define BITMAPIMAGEPROCESSING_H
+#ifndef FRIDABITMAP_H
+#define FRIDABITMAP_H
 
 static const int _512by512_IMG_SIZE = 262144;
 static const int BMP_COLOR_TABLE_SIZE = 1024;
@@ -13,10 +13,10 @@ static const int WHITE = MAX_COLOR;
 static const int BLACK = MIN_COLOR;
 static const int GRAYLEVELS_NUM = 255;
 
-class BitmapImageProcessing
+class FridaBitmap
 {
 public:
-  BitmapImageProcessing(
+  FridaBitmap(
       const char *_inImgName,
       const char *_outImgName,
       int *_height,
@@ -33,7 +33,7 @@ public:
   void adjustBrightness(unsigned char *_inputImgData, unsigned char *_outputImgData, int imgSize, int adjustment);
   void computeHistogram(unsigned char *_imgData, int imgRows, int imgCols, float hist[], const char *histFileName);
   void equalizeHistogram(unsigned char *_inputImgData, unsigned char *_outputImgData, int imgRows, int imgCols);
-  virtual ~BitmapImageProcessing();
+  virtual ~FridaBitmap();
 
 protected:
 private:
@@ -48,4 +48,4 @@ private:
   unsigned char *outBuffer;
 };
 
-#endif // BITMAPIMAGEPROCESSING_H
+#endif // FRIDABITMAP_H

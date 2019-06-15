@@ -1,5 +1,5 @@
 #include <iostream>
-#include "include/BitmapImageProcessing.h"
+#include "include/FridaBitmap.h"
 
 int main()
 {
@@ -19,15 +19,15 @@ int main()
   // const char newImageName[] = "images/output/image_brightenup.bmp";
   const char newImageName[] = "images/output/image_equalized.bmp";
 
-  BitmapImageProcessing *image = new BitmapImageProcessing(imgName,
-                                                           newImageName,
-                                                           &imgHeight,
-                                                           &imgWidth,
-                                                           &imgBitDepth,
-                                                           &imgHeader[0],
-                                                           &imgColorTable[0],
-                                                           &imgInBuffer[0],
-                                                           &imgOutBuffer[0]);
+  FridaBitmap *image = new FridaBitmap(imgName,
+                                       newImageName,
+                                       &imgHeight,
+                                       &imgWidth,
+                                       &imgBitDepth,
+                                       &imgHeader[0],
+                                       &imgColorTable[0],
+                                       &imgInBuffer[0],
+                                       &imgOutBuffer[0]);
 
   // image->readImage();
   // image->copyImgData(imgInBuffer, imgOutBuffer, _512by512_IMG_SIZE);
