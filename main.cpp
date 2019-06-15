@@ -47,7 +47,7 @@ int main()
   // std::cout << "Image succesfully copied and " <<  ((adjustment > 0) ? "brightened" : "darkened") << "!" << std::endl;
 
   image->readImage();
-  image->computeHistogram(imgInBuffer, imgHeight, imgWidth, imgHist);
+  image->computeHistogram(imgInBuffer, imgHeight, imgWidth, imgHist, "images/output/hist.txt");
 
   std::cout << "Image computed histogram!" << std::endl;
 

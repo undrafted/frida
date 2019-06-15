@@ -109,10 +109,10 @@ void BitmapImageProcessing::adjustBrightness(unsigned char *_inImgData, unsigned
   }
 }
 
-void BitmapImageProcessing::computeHistogram(unsigned char *_imgData, int imgRows, int imgCols, float hist[])
+void BitmapImageProcessing::computeHistogram(unsigned char *_imgData, int imgRows, int imgCols, float hist[], const char *histFileName)
 {
   FILE *fptr;
-  fptr = fopen("images/output/hist.txt", "w");
+  fptr = fopen(histFileName, "w");
   int x, y, i, j;
   long int ihist[256], sum;
   for (i = 0; i <= 255; i++)

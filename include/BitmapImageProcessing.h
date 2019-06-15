@@ -31,7 +31,7 @@ public:
   void copyImgData(unsigned char *_srcBuffer, unsigned char *_destBuffer, int bufferSize);
   void binarizeImage(unsigned char *_inImgData, unsigned char *_outImgData, int imgSize, int threshold);
   void adjustBrightness(unsigned char *_inputImgData, unsigned char *_outputImgData, int imgSize, int adjustment);
-  void computeHistogram(unsigned char *_imgData, int imgRows, int imgCols, float hist[]);
+  void computeHistogram(unsigned char *_imgData, int imgRows, int imgCols, float hist[], const char *histFileName);
   virtual ~BitmapImageProcessing();
 
 protected:
