@@ -1,8 +1,7 @@
-#include <iostream>
 #include "include/FridaBitmap.h"
+#include <iostream>
 
-int main()
-{
+int main() {
 
   int imgWidth;
   int imgHeight;
@@ -19,15 +18,9 @@ int main()
   // const char newImageName[] = "images/output/image_brightenup.bmp";
   const char newImageName[] = "images/output/image_equalized.bmp";
 
-  FridaBitmap *image = new FridaBitmap(imgName,
-                                       newImageName,
-                                       &imgHeight,
-                                       &imgWidth,
-                                       &imgBitDepth,
-                                       &imgHeader[0],
-                                       &imgColorTable[0],
-                                       &imgInBuffer[0],
-                                       &imgOutBuffer[0]);
+  FridaBitmap *image = new FridaBitmap(
+      imgName, newImageName, &imgHeight, &imgWidth, &imgBitDepth, &imgHeader[0],
+      &imgColorTable[0], &imgInBuffer[0], &imgOutBuffer[0]);
 
   // image->readImage();
   // image->copyImgData(imgInBuffer, imgOutBuffer, _512by512_IMG_SIZE);
@@ -43,13 +36,15 @@ int main()
 
   // int adjustment = 50;
   // image->readImage();
-  // image->adjustBrightness(imgInBuffer, imgOutBuffer, _512by512_IMG_SIZE, adjustment);
-  // image->writeImage();
-  // std::cout << "Image succesfully copied and " <<  ((adjustment > 0) ? "brightened" : "darkened") << "!" << std::endl;
+  // image->adjustBrightness(imgInBuffer, imgOutBuffer, _512by512_IMG_SIZE,
+  // adjustment); image->writeImage(); std::cout << "Image succesfully copied
+  // and " <<  ((adjustment > 0) ? "brightened" : "darkened") << "!" <<
+  // std::endl;
 
   // image->readImage();
-  // image->computeHistogram(imgInBuffer, imgHeight, imgWidth, imgHist, "images/output/hist.txt");
-  // std::cout << "Image computed histogram!" << std::endl;
+  // image->computeHistogram(imgInBuffer, imgHeight, imgWidth, imgHist,
+  // "images/output/hist.txt"); std::cout << "Image computed histogram!" <<
+  // std::endl;
 
   image->readImage();
   image->equalizeHistogram(imgInBuffer, imgOutBuffer, imgHeight, imgWidth);
