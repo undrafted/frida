@@ -1,4 +1,37 @@
+# macOS system files
 .DS_Store
-.vscode
-images/output
-a.out
+
+# VS Code settings
+.vscode/
+
+# Compiled binaries and object files
+*.o
+*.obj
+*.exe
+*.out
+*.a
+*.so
+*.dll
+
+# Build directories
+/build/
+bin/
+out/
+
+# Image output directory
+images/output/
+
+# Logs and temporary files
+*.log
+*.tmp
+*.swp
+*.swo
+
+# CMake files
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+
+# Other system files
+Thumbs.db
